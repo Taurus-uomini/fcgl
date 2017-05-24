@@ -1,0 +1,97 @@
+﻿@using fcgl.Models
+@model HousePropertyModels
+
+@{
+    ViewBag.Title = "删除";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">删除</h3>
+    </div>
+    <div class="panel-body">
+        <h3>你确定要删除吗？</h3>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.adress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.adress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.prize)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.prize)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.detial)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.detial)
+                </dd>
+            </dl>
+            <div class="well login-input">
+                <label>房产房屋实图</label>
+                <div class="row">
+                    @foreach (PropertyImageModels pim in Model.img.ToList())
+                    {
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="@pim.url" alt="...">
+                                <div class="caption">
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="well login-input">
+                <label>证件</label>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Model.propertyUrl1" alt="...">
+                            <div class="caption">
+                                <em style="font-size:small;color:red;">房产证正面</em>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Model.propertyUrl2" alt="...">
+                            <div class="caption">
+                                <em style="font-size:small;color:red;">房产证反面</em>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Model.propertyUrl3" alt="...">
+                            <div class="caption">
+                                <em style="font-size:small;color:red;">房产证关键信息页</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="删除" class="btn btn-default" /> |
+                    @Html.ActionLink("返回列表", "userPropertyList")
+                </div>
+            }
+        </div>
+    </div>
+</div>

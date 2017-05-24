@@ -1,0 +1,139 @@
+﻿@using fcgl.Models
+@model HousePropertyModels
+
+@{
+    ViewBag.Title = "添加房产信息";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">添加房产信息</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div id="address" class="login-input">
+                @Html.LabelFor(m => m.adress)
+                <select id="provinceid" class="form-control select-input">
+                    @foreach (ProvincesModels pm in ViewBag.provincesModelsList)
+                {
+                        <option value="@pm.provinceid">@pm.province</option>
+                    }
+                </select>
+                <select id="cityid" style="display:none;" class="form-control select-input">
+
+                </select>
+                <select id="areaid" name="areaid" style="display:none;" class="form-control select-input">
+
+                </select>
+                @Html.ValidationMessage("areaid", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.adress, new { @class = "form-control", @placeholder = "详细地址" })
+                @Html.ValidationMessageFor(model => model.adress, "", new { @class = "text-danger" })
+            </div>  
+            @Html.TextBoxFor(model => model.prize, new { @class = "form-control login-input", @placeholder = Html.DisplayNameFor(m => m.prize) })
+            @Html.ValidationMessageFor(model => model.prize, "", new { @class = "text-danger" })
+            @Html.TextAreaFor(model => model.detial, new { @class= "form-control login-input", @placeholder = Html.DisplayNameFor(m => m.detial) })
+            @Html.ValidationMessageFor(model => model.detial, "", new { @class = "text-danger" })
+            <div class="well login-input">
+                <div class="">
+                    <label class="control-label">房产房屋实图</label>
+                    <input id="filefcst" name="propertyUrl" type="file" multiple class="file-loading" data-overwrite-initial="false" data-min-file-count="2">
+                    @Html.ValidationMessageFor(model => model.img, "", new { @class = "text-danger" })
+                    <input type="hidden" id="propertyUrl0" name="propertyUrl0" value="" />
+                </div>
+            </div>
+            <div class="well login-input">
+                <div>
+                    @Html.Label("证件")
+                </div>
+                <div>
+                    <label class="control-label">房产证正面</label>
+                    <input type="file" name="propertyUrl" id="zjfilezm" class="file-loading" />
+                    @Html.ValidationMessageFor(model => model.propertyUrl1, "", new { @class = "text-danger" })
+                    <input type="hidden" id="propertyUrl1" name="propertyUrl1" value="" />
+                </div>
+                <div>
+                    <label class="control-label">房产证反面</label>
+                    <input type="file" name="propertyUrl" id="zjfilefm" class="file-loading" />
+                    @Html.ValidationMessageFor(model => model.propertyUrl2, "", new { @class = "text-danger" })
+                    <input type="hidden" id="propertyUrl2" name="propertyUrl2" value="" />
+                </div>
+                <div>
+                    <label class="control-label">房产证关键信息页</label>
+                    <input type="file" name="propertyUrl" id="zjfilegj" class="file-loading" />
+                    @Html.ValidationMessageFor(model => model.propertyUrl3, "", new { @class = "text-danger" })
+                    <input type="hidden" id="propertyUrl3" name="propertyUrl3" value="" />
+                </div>
+            </div>
+            <input type="hidden" name="owner" value="sss" />
+            <button type="submit" class="btn btn-primary login-button">添加</button>
+        }
+
+        <div>
+            @Html.ActionLink("返回列表", "userPropertyList")
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        function initfileinput(id,url,max)
+        {
+            $("#"+id).fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: url, //上传的地址
+                allowedFileExtensions: ['jpg', 'png', 'gif'],//接收的文件后缀,
+                maxFilesNum: max,
+                showClose: false,
+                enctype: 'multipart/form-data',
+                showUpload: true, //是否显示上传按钮
+                showCaption: false,//是否显示标题
+                browseClass: "btn btn-primary", //按钮样式             
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            });
+        }
+        $("#filefcst").fileinput({
+            language: 'zh',
+            uploadUrl: '/HouseProperty/AjaxUploadFiles',
+            allowedFileExtensions: ['jpg', 'png', 'gif'],
+            showUpload: true,
+            showClose:false,
+            overwriteInitial: false,
+            maxFileSize: 1000,
+            maxFilesNum: 1,
+            browseClass: "btn btn-primary",
+            slugCallback: function (filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+        var s = Array();
+        var n = 0;
+        initfileinput("zjfilezm", "/HouseProperty/AjaxUploadFiles", 1);
+        initfileinput("zjfilefm", "/HouseProperty/AjaxUploadFiles", 1);
+        initfileinput("zjfilegj", "/HouseProperty/AjaxUploadFiles", 1);
+        $("#zjfilezm").on("fileuploaded", function (event, data, previewId, index) {
+            var data = data.response.url;
+            $("#propertyUrl1").val(data);
+        });
+        $("#zjfilefm").on("fileuploaded", function (event, data, previewId, index) {
+            var data = data.response.url;
+            $("#propertyUrl2").val(data);
+        });
+        $("#zjfilegj").on("fileuploaded", function (event, data, previewId, index) {
+            var data = data.response.url;
+            $("#propertyUrl3").val(data);
+        });
+        $("#filefcst").on("fileuploaded", function (event, data, previewId, index) {
+            var data = data.response.url;
+            s[n++]=data;
+            $("#propertyUrl0").val(s);
+        });
+        $('#filefcst').on('fileclear', function (event, key) {
+            s = Array();
+        });
+    });
+    
+</script>

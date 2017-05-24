@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@using fcgl.Models
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>hello</title>
+</head>
+<body>
+    <div>
+        @foreach(ProvincesModels pm in ViewBag.plist)
+        {
+            @Html.Label("insert into ProvincesModels(provinceid,province) values('" + pm.provinceid + "','" + pm.province + "');")<br />
+        }
+        <br />
+        <br />
+        @foreach (CitiesModels cm in ViewBag.clist)
+        {
+            @Html.Label("insert into CitiesModels(cityid,city,provinceid) values('" + cm.cityid + "','" + cm.city + "','" + cm.provinceid + "');")<br />
+        }
+        <br />
+        <br />
+        @foreach (AreasModels am in ViewBag.alist)
+        {
+            @Html.Label("insert into AreasModels(areaid,area,cityid) values('" + am.areaid + "','" + am.area + "','" + am.cityid + "');")<br />
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "用户信息修改";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+@model UserModels
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户信息修改</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <table class="table show-info table-hover">
+                <tr>
+                    <td>用户名</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.username, new { @class = "form-control", @disabled = "" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>真实姓名</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.relname, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.relname, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机号</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>电子邮箱</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>
+            </table>
+            @Html.HiddenFor(m => m.username)
+            @Html.HiddenFor(m => m.password)
+            @Html.HiddenFor(m => m.id)
+            <button type="submit" class="btn btn-primary login-button">修改</button>
+        }
+    </div>
+</div>
+
+
+

@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "房产详细信息";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+@model HousePropertyModels
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">房产详细信息</h3>
+    </div>
+    <div class="panel-body">
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.adress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.adress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.prize)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.prize)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.detial)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.detial)
+                </dd>
+
+            </dl>
+            <div class="well login-input">
+                <label>房产房屋实图</label>
+                <div class="row">
+                    @foreach (PropertyImageModels pim in Model.img.ToList())
+                    {
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="@pim.url" alt="...">
+                                <div class="caption">
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="well login-input">
+                <label>证件</label>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Model.propertyUrl1" alt="...">
+                            <div class="caption">
+                                <em style="font-size:small;color:red;">房产证正面</em>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Model.propertyUrl2" alt="...">
+                            <div class="caption">
+                                <em style="font-size:small;color:red;">房产证反面</em>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Model.propertyUrl3" alt="...">
+                            <div class="caption">
+                                <em style="font-size:small;color:red;">房产证关键信息页</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (ViewBag.userModels == null || !ViewBag.userModels.houseProperty.Contains(Model))
+            {
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#buy">
+                    购买
+                </button>
+            }
+            else
+            {
+                @Html.Label("这是你的房产");
+            }
+        </div>
+        <p>
+            @Html.ActionLink("返回首页", "index")
+        </p>
+    </div>
+</div>
+<div class="modal fade" id="buy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">确认购买</h4>
+            </div>
+            <div class="modal-body">
+                你确认购买？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="buy-btn" data-id="@Model.id" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $("#buy-btn").click(function () {
+            var id = $("#buy-btn").attr("data-id");
+            $.get("/Index/Buy", { id: id },
+            function (data) {
+                if(data.ret==1)
+                {
+                    alert("已将你的信息发送给房主，请等待房主联系");
+                    location.href = "/Index/Index";
+                }
+                else if(data.ret==-1)
+                {
+                    alert("非法请求！");
+                }
+                else if (data.ret == -2)
+                {
+                    alert("请先登陆！");
+                    location.href = "/User/Login";
+                }
+                else if (data.ret == -3)
+                {
+                    alert("你不能购买自己的房产！");
+                }
+            });
+        });
+    });
+</script>
+

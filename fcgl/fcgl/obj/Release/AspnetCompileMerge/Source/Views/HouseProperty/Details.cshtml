@@ -1,0 +1,53 @@
+﻿@model fcgl.Models.HousePropertyModels
+
+@{
+    ViewBag.Title = "房产详细信息";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">房产详细信息</h3>
+    </div>
+    <div class="panel-body">
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.adress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.adress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.prize)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.prize)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.detial)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.detial)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.propertyUrl)
+                </dt>
+
+                <dd>
+                    <img src="@Model.propertyUrl" id="btn_file" width="100" style="margin:5% 15%;" />
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("返回列表", "userPropertyList")
+        </p>
+    </div>
+</div>

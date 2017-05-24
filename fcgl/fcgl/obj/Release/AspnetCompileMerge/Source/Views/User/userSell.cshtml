@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "我的卖出";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">我的卖出</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <tr>
+                <td>订单ID</td>
+                <td>房产地址</td>
+                <td>房产价格</td>
+                <td>订单创建时间</td>
+                <td>购买用户</td>
+                <td>联系手机</td>
+                <td>联系邮箱</td>
+                <td>状态</td>
+                <td>操作</td>
+            </tr>
+            @foreach (var item in ViewBag.OrderList)
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.houseProperty.adress</td>
+                    <td>@item.houseProperty.prize</td>
+                    <td>@item.startTime</td>
+                    <td>@item.buyer.username</td>
+                    <td>@item.buyer.phone</td>
+                    <td>@item.buyer.email</td>
+                    <td>
+                        @switch ((int)item.status)
+                        {
+                            case 0: @Html.Label("等待付款"); break;
+                            case 1: @Html.Label("已成交 ");@item.finishTime break;
+                            case 2: @Html.Label("已取消");@item.cancelTime break;
+                        }
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                @if (item.status == 0)
+                                {
+                                    <li>@Html.ActionLink("成交", "Finish", new { id = item.id })</li>
+                                }
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

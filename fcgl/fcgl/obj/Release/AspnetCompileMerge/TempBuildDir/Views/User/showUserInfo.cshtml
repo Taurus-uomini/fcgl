@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "用户信息";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+@model UserModels
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户信息</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table show-info table-hover">
+            <tr>
+                <td>用户名</td>
+                <td>@ViewBag.userModels.username</td>
+            </tr>
+            <tr>
+                <td>真实姓名</td>
+                <td>@ViewBag.userModels.relname</td>
+            </tr>
+            <tr>
+                <td>手机号</td>
+                <td>@ViewBag.userModels.phone</td>
+            </tr>
+            <tr>
+                <td>电子邮箱</td>
+                <td>@ViewBag.userModels.email</td>
+            </tr>
+        </table>
+        <a class="btn btn-default login-button" href="editUserInfo" role="button">修改信息</a>
+        <a class="btn btn-primary login-button" href="changePassword" role="button">修改密码</a>
+    </div>
+</div>
+
+

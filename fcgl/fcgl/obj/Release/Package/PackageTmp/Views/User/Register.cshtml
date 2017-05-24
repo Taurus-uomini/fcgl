@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "注册";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+@model UserModels
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">注册</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.TextBoxFor(m=>m.username, new { @class = "form-control login-input", @placeholder="用户名" })
+            @Html.ValidationMessageFor(m => m.username, "", new { @class = "text-danger login-Message" })
+            @Html.PasswordFor(m=>m.password, new { @class = "form-control login-input", @placeholder = "密码" })
+            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger login-Message" })
+            @Html.Password("repassword","", new { @class = "form-control login-input", @placeholder = "确认密码" })
+            @Html.ValidationMessage("repasserror", new { @class= "text-danger login-Message" })
+            @Html.TextBoxFor(m => m.phone, new { @class = "form-control login-input", @placeholder = "手机号" })
+            @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger login-Message" })
+            @Html.TextBoxFor(m => m.relname, new { @class = "form-control login-input", @placeholder = "真实姓名" })
+            @Html.ValidationMessageFor(m => m.relname, "", new { @class = "text-danger login-Message" })
+            @Html.TextBoxFor(m => m.idcard, new { @class = "form-control login-input", @placeholder = "身份证号" })
+            @Html.ValidationMessageFor(m => m.idcard, "", new { @class = "text-danger login-Message" })
+            @Html.TextBoxFor(m => m.email, new { @class = "form-control login-input", @placeholder = "电子邮件" })
+            @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger login-Message" })
+            <div id="address" class="login-input">
+                @Html.LabelFor(m => m.adress)
+                <select id="provinceid" class="form-control select-input">
+                    @foreach (ProvincesModels pm in ViewBag.provincesModelsList)
+                    {
+                        <option value="@pm.provinceid">@pm.province</option>
+                    }
+                </select>
+                <select id="cityid" style="display:none;" class="form-control select-input"></select>
+                <select id="areaid" name="areaid" style="display:none;" class="form-control select-input"></select>
+                @Html.ValidationMessage("areaid", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.adress, new { @class = "form-control", @placeholder = "详细地址" })
+                @Html.ValidationMessageFor(model => model.adress, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary login-button">注册</button>
+        }
+    </div>
+</div>
+

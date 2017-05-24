@@ -1,0 +1,57 @@
+﻿.div_center
+{
+    margin-top:60px;
+}
+.left
+{
+    float:left;
+    width:20%;
+}
+.main
+{
+    float:left;
+    width:80%;
+    margin-bottom:10%;
+}
+.center
+{
+    width:70%;
+    margin:0 auto;
+}
+.footer
+{
+    width:80%;
+    position:fixed;
+    top:85%;
+    left:10%;
+    text-align:center;
+}
+.login-input
+{
+    width:70% !important;
+    margin:auto auto;
+    margin-top:5%;
+}
+.login-Message
+{
+    margin-left:15%;
+}
+.login-button
+{
+    margin:10px 15%;
+}
+.show-info
+{
+    width:80%;
+    margin:auto;
+}
+#file
+{
+    width:0;
+    height:0;
+}
+.select-input
+{
+    width:40% !important;
+    margin-bottom:1%;
+}

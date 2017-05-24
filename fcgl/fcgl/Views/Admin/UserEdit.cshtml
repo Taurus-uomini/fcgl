@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "用户信息修改";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+@model UserModels
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户信息修改</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <table class="table show-info table-hover">
+                <tr>
+                    <td>用户名</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.username, new { @class = "form-control", @disabled = "" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>真实姓名</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.relname, new { @class = "form-control", @disabled = "" })
+                        @Html.ValidationMessageFor(m => m.relname, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>身份证号</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.idcard, new { @class = "form-control", @disabled = "" })
+                        @Html.ValidationMessageFor(m => m.idcard, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机号</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>电子邮箱</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>详细地址</td>
+                    <td>
+                        <div id="address" class="login-input">
+                            <select id="provinceid" class="form-control select-input">
+                                @foreach (ProvincesModels pm in ViewBag.provincesModelsList)
+                                {
+                                    if (ViewBag.provincesModels.id == pm.id)
+                                    {
+                                        <option value="@pm.provinceid" selected="selected">@pm.province</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@pm.provinceid">@pm.province</option>
+                                    }
+                                }
+                            </select>
+                            <select id="cityid" style="display:block;" class="form-control select-input">
+                                @foreach (CitiesModels cm in ViewBag.citiesModelsList)
+                                {
+                                    if (ViewBag.citiesModels.id == cm.id)
+                                    {
+                                        <option value="@cm.cityid" selected="selected">@cm.city</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@cm.cityid">@cm.city</option>
+                                    }
+                                }
+                            </select>
+                            <select id="areaid" name="areaid" style="display:block;" class="form-control select-input">
+                                @foreach (AreasModels am in ViewBag.areasModelsList)
+                                {
+                                    if (Model.area.id == am.id)
+                                    {
+                                        <option value="@am.id" selected="selected">@am.area</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@am.id">@am.area</option>
+                                    }
+                                }
+                            </select>
+                            @Html.ValidationMessage("areaid", new { @class = "text-danger" })
+                            @Html.TextBoxFor(model => model.adress, new { @class = "form-control", @placeholder = "详细地址" })
+                            @Html.ValidationMessageFor(model => model.adress, "", new { @class = "text-danger", @id = "adresserr" })
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            @Html.HiddenFor(m => m.relname)
+            @Html.HiddenFor(m => m.idcard)
+            @Html.HiddenFor(m => m.username)
+            @Html.HiddenFor(m => m.password)
+            @Html.HiddenFor(m => m.id)
+            <input type="hidden" name="oareaid" value="@Model.area.id" />
+            <button type="submit" class="btn btn-primary login-button">修改</button>
+        }
+    </div>
+</div>
+
+
+

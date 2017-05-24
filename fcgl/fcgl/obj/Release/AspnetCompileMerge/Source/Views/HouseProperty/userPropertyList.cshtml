@@ -1,0 +1,80 @@
+﻿@model IEnumerable<fcgl.Models.HousePropertyModels>
+
+@{
+    ViewBag.Title = "用户房产";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户房产</h3>
+    </div>
+    <div class="panel-body">
+        <a class="btn btn-default login-button" href="Create" role="button">添加</a>
+        <table class="table show-info table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.adress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.prize)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.detial)
+                </th>
+                <th>
+                    状态
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.adress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.detial)
+                    </td>
+                    <td>
+                        @switch(item.status)
+                        {
+                            case 0: @Html.Label("未审核"); break;
+                            case 1: @Html.Label("已审核"); break;
+                            case 2: @Html.Label("出售中"); break;
+                            case 3: @Html.Label("成交中"); break;
+                        }
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                @if (item.status == 0)
+                                {
+                                    <li>@Html.ActionLink("修改", "Edit", new { id = item.id })</li>
+                                }
+                                @if (item.status == 1)
+                                {
+                                    <li>@Html.ActionLink("出售", "Sell", new { id = item.id })</li>
+                                }
+                                <li>@Html.ActionLink("详细信息", "Details", new { id = item.id })</li>
+                                @if (item.status != 3)
+                                {
+                                    <li>@Html.ActionLink("删除", "Delete", new { id = item.id })</li>
+                                }
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "用户管理";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户管理</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <tr>
+                <td>用户ID</td>
+                <td>用户名</td>
+                <td>真实姓名</td>
+                <td>手机号</td>
+                <td>电子邮箱</td>
+                <td>操作</td>
+            </tr>
+            @foreach(var item in ViewBag.userList)
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.username</td>
+                    <td>@item.relname</td>
+                    <td>@item.phone</td>
+                    <td>@item.email</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                <li><a href="/Admin/UserEdit?id=@item.id">修改</a></li>
+                                <li><a href="/Admin/UserDelete?id=@item.id">删除</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+

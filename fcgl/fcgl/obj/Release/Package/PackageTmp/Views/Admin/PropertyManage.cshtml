@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "用户房产管理";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户房产管理</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <tr>
+                <td>房产ID</td>
+                <td>房产地址</td>
+                <td>房产价格</td>
+                <td>详细介绍</td>
+                <td>所属用户</td>
+                <td>状态</td>
+                <td>操作</td>
+            </tr>
+            @foreach (var item in ViewBag.housePropertyList)
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.adress</td>
+                    <td>@item.prize</td>
+                    <td>@item.detial</td>
+                    <td>@item.owner.username</td>
+                    <td>
+                        @switch ((int)item.status)
+                        {
+                            case 0: @Html.Label("未审核"); break;
+                            case 1: @Html.Label("已审核"); break;
+                            case 2: @Html.Label("出售中"); break;
+                            case 3: @Html.Label("成交中"); break;
+                        }
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                @if (item.status == 0)
+                                {
+                                    <li>@Html.ActionLink("通过审核", "PropertyCheck", new { id = item.id })</li>
+                                }
+                                <li>@Html.ActionLink("详细信息", "PropertyDetails", new { id = item.id })</li>
+                                @if (item.status != 2)
+                                {
+                                    <li><a href="/Admin/PropertyDelete?id=@item.id">删除</a></li>
+                                }                             
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+

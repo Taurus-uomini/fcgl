@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "网站信息修改";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+@model InfoModels
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">网站信息修改</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <table class="table show-info table-hover">
+                <tr>
+                    <td>@Html.DisplayNameFor(m=>m.webName)</td>
+                    <td>
+                        @Html.TextBoxFor(m=>m.webName, new { @class = "form-control" })
+                       @Html.ValidationMessageFor(m => m.webName, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr> 
+                <tr>
+                    <td>@Html.DisplayNameFor(m => m.designer)</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.designer, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.designer, "", new { @class = "text-danger login-Message" })
+                    </td>
+                </tr>    
+            </table>
+            @Html.HiddenFor(m=>m.id)
+            <button type="submit" class="btn btn-primary login-button">修改</button>
+        }
+    </div>
+</div>
+

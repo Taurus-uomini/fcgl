@@ -1,0 +1,80 @@
+﻿@using fcgl.Models
+@model HousePropertyModels
+
+@{
+    ViewBag.Title = "修改房产信息";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">修改房产信息</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div id="address" class="login-input">
+                @Html.LabelFor(m => m.adress)
+                <select id="provinceid" class="form-control select-input">
+                    @foreach (ProvincesModels pm in ViewBag.provincesModelsList)
+                    {
+                        if (ViewBag.provincesModels.id == pm.id)
+                        {
+                            <option value="@pm.provinceid" selected = "selected">@pm.province</option>
+                        }
+                        else
+                        {
+                            <option value="@pm.provinceid">@pm.province</option>
+                        }
+                    }
+                </select>
+                <select id="cityid" style="display:block;" class="form-control select-input">
+                    @foreach (CitiesModels cm in ViewBag.citiesModelsList)
+                    {
+                        if (ViewBag.citiesModels.id == cm.id)
+                        {
+                            <option value="@cm.cityid" selected="selected">@cm.city</option>
+                        }
+                        else
+                        {
+                            <option value="@cm.cityid">@cm.city</option>
+                        }
+                    }
+                </select>
+                <select id="areaid" name="areaid" style="display:block;" class="form-control select-input">
+                    @foreach (AreasModels am in ViewBag.areasModelsList)
+                    {
+                        if (Model.area.id == am.id)
+                        {
+                            <option value="@am.id" selected="selected">@am.area</option>
+                        }
+                        else
+                        {
+                            <option value="@am.id">@am.area</option>
+                        }
+                    }
+                </select>
+                @Html.ValidationMessage("areaid", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.adress, new { @class = "form-control", @placeholder = "详细地址" })
+                @Html.ValidationMessageFor(model => model.adress, "", new { @class = "text-danger",@id="adresserr" })
+            </div>
+            @Html.TextBoxFor(model => model.prize, new { @class = "form-control login-input", @placeholder = Html.DisplayNameFor(m => m.prize) })
+            @Html.ValidationMessageFor(model => model.prize, "", new { @class = "text-danger", @id = "prizeerr" })
+            @Html.TextAreaFor(model => model.detial, new { @class = "form-control login-input", @placeholder = Html.DisplayNameFor(m => m.detial) })
+            @Html.ValidationMessageFor(model => model.detial, "", new { @class = "text-danger", @id = "detialerr" })
+            <input type="hidden" name="hid" value="@Model.id" />
+            <input type="hidden" name="propertyUrl1" value="@Model.propertyUrl1" />
+            <input type="hidden" name="propertyUrl2" value="@Model.propertyUrl2" />
+            <input type="hidden" name="propertyUrl3" value="@Model.propertyUrl3" />
+            <input type="hidden" name="area" value="@Model.area" />
+            <input type="hidden" name="owner" value="@Model.owner" />
+            <input type="hidden" name="oareaid" value="@Model.area.id" />
+            <button type="submit" class="btn btn-primary login-button">修改</button>
+        }
+
+        <div>
+            @Html.ActionLink("返回列表", "userPropertyList")
+        </div>
+    </div>
+</div>

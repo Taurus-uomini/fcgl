@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/flat-ui.min.css">
+    <link rel="stylesheet" href="~/css/fileinput.min.css">
+    <link rel="stylesheet" href="~/css/theme.css" />
+    <link rel="stylesheet" href="~/css/main.css" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/flat-ui.min.js"></script>
+    <script src="~/Scripts/application.js"></script>
+    <script src="~/Scripts/fileinput.min.js"></script>
+    <script src="~/Scripts/sortable.min.js"></script>
+    <script src="~/Scripts/theme.js"></script>
+    <script src="~/Scripts/zh.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/index.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Index/Index">
+                    @ViewBag.infoModel.webName
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Index/Index">首页</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (ViewBag.adminModels != null)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.adminModels.username<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Admin/UserManage">用户管理</a></li>
+                                <li><a href="/Admin/Logout">注销</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (ViewBag.userModels != null)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag.userModels.username<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/User/showUserInfo">用户信息</a></li>
+                                <li><a href="/User/Logout">注销</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a href="/User/Login">用户登陆</a></li>
+                        <li><a href="/Admin/Login">管理员登陆</a></li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <div class="div_center">
+        <div class="left">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href=""></a></li>
+                @if (ViewBag.menuList != null)
+                {
+                    foreach (var item in ViewBag.menuList)
+                    {
+                        string active = "";
+                        if (item.active) { active = "class="+"active"; }
+                        <li @active><a href="@item.url">@item.name</a></li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="main">
+            @RenderBody()
+        </div>
+    </div>  
+    <div class="footer">
+        <div class="well">
+            <p>Power By&ensp;<strong>@ViewBag.infoModel.designer</strong></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "主页";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">主页</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            @foreach (var item in ViewBag.housePropertyList)
+            {
+                <a href="/Home/PropertyDetial/@item.id" class="list-group-item">
+                    <h4 class="list-group-item-heading">@item.adress</h4>
+                    <h5>所属人：@item.owner.username &ensp;<small>@item.prize &yen;</small></h5>
+                    <p class="list-group-item-text">@item.detial</p>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+

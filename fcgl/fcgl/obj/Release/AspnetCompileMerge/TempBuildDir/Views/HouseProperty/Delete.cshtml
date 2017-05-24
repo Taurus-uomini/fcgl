@@ -1,0 +1,61 @@
+﻿@model fcgl.Models.HousePropertyModels
+
+@{
+    ViewBag.Title = "删除";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">删除</h3>
+    </div>
+    <div class="panel-body">
+        <h3>你确定要删除吗？</h3>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.adress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.adress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.prize)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.prize)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.detial)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.detial)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.propertyUrl)
+                </dt>
+
+                <dd>
+                    <img src="@Model.propertyUrl" id="btn_file" width="100" style="margin:5% 15%;" />
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="删除" class="btn btn-default" /> |
+                    @Html.ActionLink("返回列表", "userPropertyList")
+                </div>
+            }
+        </div>
+    </div>
+</div>

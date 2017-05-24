@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="mydbEntities-Web.config Connection String" description="mydbEntities 由应用程序在 web.config 中用来访问数据库的连接字符串。" defaultValue="Data Source=DESKTOP-P6SHOMB;Initial Catalog=mydb;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Taurus-uomini\\documents\\visual\ studio\ 2015\\Projects\\fcgl\\fcgl\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='mydbEntities']/@connectionString" />
+  </parameter>
+  <parameter name="mydbEntities_DatabasePublish-Web.config Connection String" description="mydbEntities_DatabasePublish 由应用程序在 web.config 中用来访问数据库的连接字符串。" defaultValue="mydbEntities_DatabasePublish.ConnetionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Taurus-uomini\\documents\\visual\ studio\ 2015\\Projects\\fcgl\\fcgl\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='mydbEntities_DatabasePublish']/@connectionString" />
+  </parameter>
+</parameters>

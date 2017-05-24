@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "我的购买";
+    Layout = "~/Views/include/_Layout.cshtml";
+}
+@using fcgl.Models
+<div class="panel panel-default center">
+    <div class="panel-heading">
+        <h3 class="panel-title">我的购买</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover table-condensed">
+            <tr>
+                <td>订单ID</td>
+                <td>房产地址</td>
+                <td>房产价格</td>
+                <td>订单创建时间</td>
+                <td>所属用户</td>
+                <td>联系手机</td>
+                <td>状态</td>
+                <td>操作</td>
+            </tr>
+            @foreach (var item in ViewBag.OrderList)
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.houseProperty.adress</td>
+                    <td>@item.houseProperty.prize</td>
+                    <td>@item.startTime</td>
+                    <td>@item.seller.username</td>
+                    <td>@item.seller.phone</td>
+                    <td>
+                        @switch ((int)item.status)
+                        {
+                            case 0: @Html.Label("等待付款"); break;
+                            case 1: @Html.Label("已成交 ");@item.finishTime break;
+                            case 2: @Html.Label("已取消");@item.cancelTime break;
+                            case 3: @Html.Label("已付款 "); break;
+                        }
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                @if (item.status == 0)
+                                {
+                                    <li><a href="#" id="buy-btn" data-id="@item.id" data-toggle="modal" data-target="#pay">支付</a></li>
+                                    <li><a href="#" id="cancel-btn" data-id="@item.id">取消</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">确认支付</h4>
+            </div>
+            <div class="modal-body">
+                你确认支付？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="pay-btn" data-id="" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $("#buy-btn").click(function ()
+        {
+            var id = $("#buy-btn").attr("data-id");
+            $("#pay-btn").attr("data-id", id);
+        });
+        $("#pay-btn").click(function () {
+            var id = $("#pay-btn").attr("data-id");
+            $.post("/User/AjaxBuy", { id: id },
+            function (data) {
+                if(data.ret==1)
+                {
+                    alert("支付成功！");
+                    location.href = "/User/userBuy";
+                }
+                else if(data.ret==-1)
+                {
+                    alert("非法请求！");
+                }
+                else if (data.ret == -2)
+                {
+                    alert("请先登陆！");
+                    location.href = "/User/Login";
+                }
+                else if (data.ret == -3)
+                {
+                    alert("你不能购买自己的房产！");
+                }
+            });
+        });
+        $("#cancel-btn").click(function () {
+            var id = $("#cancel-btn").attr("data-id");
+            $.post("/User/AjaxCancel", { id: id },
+            function (data) {
+                if (data.ret == 1) {
+                    alert("订单已取消！");
+                    location.href = "/User/userBuy";
+                }
+                else if (data.ret == -1) {
+                    alert("非法请求！");
+                }
+                else if (data.ret == -2) {
+                    alert("请先登陆！");
+                    location.href = "/User/Login";
+                }
+            });
+        });
+    });
+</script>
+
